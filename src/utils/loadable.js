@@ -1,14 +1,20 @@
 import React from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
 
-const loadable = Component => props => {
+function loadable(Component) {
 
+  function load(props) {
     if (props.data.length === 0) {
-        return <LinearProgress />
-
-    } else {
-        return <Component {...props} />
+      return <LinearProgress />;
     }
+    return <Component {...props} />;
+  }
+
+  load.propTypes = {
+    data: React.PropTypes.array,
+  };
+
+  return load;
 }
 
 export default loadable;

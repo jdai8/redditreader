@@ -1,0 +1,11 @@
+{
+    "extends": "airbnb",
+    "installedESLint": true,
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "padded-blocks": "off",
+        "new-cap": "off"
+    }
+}
