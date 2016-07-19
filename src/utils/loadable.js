@@ -11,7 +11,7 @@ function loadable(Component) {
   }
 
   load.propTypes = {
-    data: React.PropTypes.array,
+    data: React.PropTypes.object,
   };
 
   return load;

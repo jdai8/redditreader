@@ -4,9 +4,6 @@ module.exports = {
 		path: './dist',
 		filename: 'app.bundle.js',
 	},
-  eslint: {
-    fix: true
-  },
 	module: {
 
     preLoaders: [{

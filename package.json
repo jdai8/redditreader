@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "webpack": "webpack",
-    "watch": "webpack --watch",
+    "start": "webpack --watch",
     "eslint": "eslint"
   },
   "author": "Jack",

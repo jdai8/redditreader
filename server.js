@@ -7,7 +7,19 @@ app.use('/', express.static('dist'));
 
 app.use('/api', (req, res) => {
   console.log(req.path);
-  request(`https://reddit.com${req.path}.json?limit=20`, (err, r, body) => {
+
+  const options = {
+    uri: `https://reddit.com${req.path}.json`,
+    headers: {
+      'User-Agent': 'material reddit app',
+    },
+    qs: {
+      'limit': 20,
+      'raw_json': 1,
+    },
+  };
+
+  request(options, (err, r, body) => {
 
     if (!err && r.statusCode === 200) {
       res.send(body);

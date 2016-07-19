@@ -30,14 +30,12 @@ function commentTree(node, i) {
   return node.data.children.map(reply => {
 
     if (reply.kind === 'more') {
-      return false;
+      return false; // <div>Load more</div>
     }
     const styles = getStyles(i);
     const children = commentTree(reply.data.replies, i + 1);
-    const shouldExpand = Boolean(children[0]);
-    // console.group(reply.data.author);
-    // console.log(children);
-    // console.groupEnd();
+    const shouldExpand = !!children[0];
+
     return (
 
       <Card
@@ -53,7 +51,12 @@ function commentTree(node, i) {
           actAsExpander={shouldExpand}
         >
           <div>{reply.data.author}</div>
-          <div>{reply.data.body}</div>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: reply.data.body_html,
+            }}
+          />
+
         </CardText>
 
         {children}

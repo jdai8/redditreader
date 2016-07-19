@@ -1,10 +1,12 @@
 import React from 'react';
 import Radium from 'radium';
 import { Card, CardHeader } from 'material-ui/Card';
-import Avatar from 'material-ui/Avatar';
+
 import client from '../utils/redditClient';
 import loadable from '../utils/loadable';
+import Thumbnail from './thumbnail';
 import CommentList from './commentList';
+import PostContent from './postContent';
 
 const styles = {
 
@@ -14,10 +16,6 @@ const styles = {
       textDecoration: 'underline',
       cursor: 'pointer',
     },
-  },
-
-  avatar: {
-    borderRadius: 2,
   },
 
   card: {
@@ -57,7 +55,6 @@ class Post extends React.Component {
 
   render() {
     const href = `https://reddit.com${this.props.data.permalink}`;
-
     return (
       <Card
         style={styles.card}
@@ -76,12 +73,17 @@ class Post extends React.Component {
           onClick={this.toggleExpand}
           className="header" // override material-ui with css
           avatar={
-            <Avatar
-              style={styles.avatar}
-              size={70}
+            <Thumbnail
+              title={this.props.data.title}
               src={this.props.data.thumbnail}
             />
           }
+        />
+
+        <PostContent
+          expandable
+          html={this.props.data.selftext_html}
+          preview={this.props.data.preview}
         />
 
         <LoadableCommentList
