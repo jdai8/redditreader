@@ -1,10 +1,19 @@
 import React from 'react';
 
 function PostContent(props) {
-  if (props.html) {
+  if (props.media && props.media.oembed) {
     return (
       <div
-        expandable
+        style={props.style}
+        dangerouslySetInnerHTML={{
+          __html: props.media.oembed.html,
+        }}
+      />
+    );
+  } else if (props.html) {
+    return (
+      <div
+        style={Object.assign({ padding: 15 }, props.style)}
         dangerouslySetInnerHTML={{
           __html: props.html,
         }}
@@ -12,14 +21,19 @@ function PostContent(props) {
     );
   } else if (props.preview) {
     return (
-      <div expandable >
-        {props.preview.images.map(image => (
+      <div >
+        {props.preview.images.map((image, i) => (
           <img
-            style={{
+            key={i}
+            style={Object.assign({
               maxWidth: '100%',
               maxHeight: '100%',
-            }}
-            src={image.source.url} alt="toast"
+            }, props.style)}
+            src={image.variants.gif ?
+              image.variants.gif.source.url :
+              image.source.url
+            }
+            alt="toast"
           />
         ))}
       </div>
@@ -33,6 +47,8 @@ function PostContent(props) {
 PostContent.propTypes = {
   html: React.PropTypes.string,
   preview: React.PropTypes.object,
+  media: React.PropTypes.object,
+  style: React.PropTypes.object,
 };
 
 export default PostContent;

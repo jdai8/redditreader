@@ -7,7 +7,10 @@ import { deepPurple500 } from 'material-ui/styles/colors';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { StyleRoot } from 'radium';
 
+import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+
 import MainPage from './components/mainPage';
+import PostListContainer from './components/postListContainer';
 
 injectTapEventPlugin();
 
@@ -20,7 +23,17 @@ const Theme = getMuiTheme({
 const App = () => (
   <StyleRoot>
     <MuiThemeProvider muiTheme={Theme}>
-      <MainPage />
+
+      <Router history={browserHistory}>
+        <Route path="/" component={MainPage}>
+          <IndexRoute component={PostListContainer} />
+          <Route
+            path="/r/:subreddit"
+            component={PostListContainer}
+          />
+        </Route>
+      </Router>
+
     </MuiThemeProvider>
   </StyleRoot>
 );

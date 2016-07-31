@@ -23,7 +23,7 @@ function getStyles(i) {
 
 function commentTree(node, i) {
 
-  if (!node) {
+  if (!node.data) {
     return false;
   }
 
@@ -69,13 +69,13 @@ function commentTree(node, i) {
 function CommentList(props) {
   return (
     <List>
-      {commentTree(props.data, 0)}
+      {commentTree(props.comments, 0)}
     </List>
   );
 }
 
 CommentList.propTypes = {
-  data: React.PropTypes.object,
+  comments: React.PropTypes.object,
 };
 
 export default CommentList;

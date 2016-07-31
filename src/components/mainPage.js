@@ -1,11 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
+
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
-
-import client from '../utils/redditClient';
-import PostList from './postList';
-import loadable from '../utils/loadable';
 
 const styles = {
 
@@ -32,23 +29,14 @@ const styles = {
   },
 };
 
-const LoadablePostList = loadable(PostList);
-
 class MainPage extends React.Component {
 
   constructor() {
     super();
     this.state = {
       drawerOpen: false,
-      posts: [],
     };
     this.toggleDrawer = this.toggleDrawer.bind(this);
-  }
-
-  componentDidMount() {
-    client.get('/r/all').then(resp =>
-      this.setState({ posts: resp.data.children })
-    );
   }
 
   toggleDrawer() {
@@ -76,11 +64,17 @@ class MainPage extends React.Component {
           style={[styles.content,
           this.state.drawerOpen && styles.whenDrawerOpen]}
         >
-          <LoadablePostList data={this.state.posts} />
+
+          {this.props.children}
+
         </div>
       </div>
     );
   }
 }
+
+MainPage.propTypes = {
+  children: React.PropTypes.node,
+};
 
 export default Radium(MainPage);

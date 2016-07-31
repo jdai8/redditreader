@@ -1,21 +1,16 @@
 import React from 'react';
-import Radium from 'radium';
 import { Card, CardHeader } from 'material-ui/Card';
 
-import client from '../utils/redditClient';
-import loadable from '../utils/loadable';
 import Thumbnail from './thumbnail';
 import CommentList from './commentList';
 import PostContent from './postContent';
+import Anchor from './anchor';
+
+import client from '../utils/redditClient';
 
 const styles = {
 
   a: {
-    textDecoration: 'none',
-    ':hover': {
-      textDecoration: 'underline',
-      cursor: 'pointer',
-    },
   },
 
   card: {
@@ -23,15 +18,13 @@ const styles = {
   },
 };
 
-const LoadableCommentList = loadable(CommentList);
-
 class Post extends React.Component {
 
   constructor() {
     super();
     this.state = {
       expanded: false,
-      comments: [],
+      comments: {},
     };
     this.toggleExpand = this.toggleExpand.bind(this);
   }
@@ -45,7 +38,8 @@ class Post extends React.Component {
     const expanded = !this.state.expanded;
     this.setState({ expanded });
 
-    if (expanded && this.state.comments.length === 0) {
+    // load comments when expanded for the first time
+    if (expanded && !this.state.comments.data) {
 
       client.get(this.props.data.permalink).then(resp =>
         this.setState({ comments: resp[1] })
@@ -54,24 +48,33 @@ class Post extends React.Component {
   }
 
   render() {
-    const href = `https://reddit.com${this.props.data.permalink}`;
+
+    // const href = `https://reddit.com${this.props.data.permalink}`;
+    const content = this.state.comments.data &&
+      <PostContent
+        style={{ display: this.state.expanded ? 'block' : 'none' }}
+        media={this.props.data.media}
+        html={this.props.data.selftext_html}
+        preview={this.props.data.preview}
+      />;
+
     return (
       <Card
         style={styles.card}
         expanded={this.state.expanded}
+        zDepth={this.state.expanded ? 2 : 1}
       >
 
         <CardHeader
           title={
-            <a href={href} target="_blank" style={styles.a}>
+            <Anchor href={this.props.data.url} >
               {this.props.data.title}
-            </a>
+            </Anchor>
           }
-
           style={styles.header}
           subtitle={this.props.data.subreddit}
           onClick={this.toggleExpand}
-          className="header" // override material-ui with css
+          className="header" // override cursor: pointer
           avatar={
             <Thumbnail
               title={this.props.data.title}
@@ -80,14 +83,10 @@ class Post extends React.Component {
           }
         />
 
-        <PostContent
-          expandable
-          html={this.props.data.selftext_html}
-          preview={this.props.data.preview}
-        />
+        {content}
 
-        <LoadableCommentList
-          data={this.state.comments}
+        <CommentList
+          comments={this.state.comments}
           expandable
         />
 
@@ -100,4 +99,4 @@ Post.propTypes = {
   data: React.PropTypes.object,
 };
 
-export default Radium(Post);
+export default Post;
