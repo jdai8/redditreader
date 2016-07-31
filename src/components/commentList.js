@@ -1,22 +1,26 @@
 import React from 'react';
 import { List } from 'material-ui/List';
 import { Card, CardText } from 'material-ui/Card';
+import { grey500 } from 'material-ui/styles/colors';
 
-const borderColors = [
-  'red', 'purple', 'orange', 'green', 'blue', 'yellow', 'black',
-];
+// const borderColors = [
+//   redA700, blueA700, orangeA700, greenA700, yellowA700, indigoA700,
+// ];
 
 function getStyles(i) {
 
   return {
     zDepth: i ? 0 : 1,
     card: {
-      marginLeft: 5,
-      marginRight: i ? 0 : 5,
-      marginBottom: i ? 0 : 5,
+      marginLeft: 8,
+      marginRight: i ? 0 : 8,
+      marginBottom: i ? 0 : 8,
     },
     cardText: {
-      borderLeft: i ? `medium solid ${borderColors[i - 1]}` : '',
+      borderLeft: i ?
+        `medium solid ${grey500}`
+      // `medium solid ${borderColors[(i - 1) % borderColors.length]}`
+        : '',
     },
   };
 }

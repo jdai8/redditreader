@@ -68,10 +68,8 @@ class Post extends React.Component {
 
     const content = this.state.comments.data &&
       <PostContent
+        data={this.props.data}
         style={{ display: this.state.expanded ? 'block' : 'none' }}
-        media={this.props.data.media}
-        html={this.props.data.selftext_html}
-        preview={this.props.data.preview}
       />;
 
     return (

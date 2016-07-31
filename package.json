@@ -6,7 +6,7 @@
   "scripts": {
     "webpack": "webpack",
     "start": "webpack-dev-server --content-base dist/ --inline --history-api-fallback",
-    "eslint": "eslint"
+    "eslint": "eslint -c .eslintrc.json src/**/*.js --fix"
   },
   "author": "Jack",
   "repository": "toast",

@@ -1,39 +1,40 @@
 import React from 'react';
 
+import ImageContent from './imageContent';
+
 function PostContent(props) {
-  if (props.media && props.media.oembed) {
+
+  if (props.data.media && props.data.media.oembed) {
+    // media
     return (
       <div
         style={props.style}
         dangerouslySetInnerHTML={{
-          __html: props.media.oembed.html,
+          __html: props.data.media.oembed.html,
         }}
       />
     );
-  } else if (props.html) {
+
+  } else if (props.data.selftext_html) {
+    // self post
     return (
       <div
-        style={Object.assign({ padding: 15 }, props.style)}
+        style={Object.assign({ padding: 20 }, props.style)}
         dangerouslySetInnerHTML={{
-          __html: props.html,
+          __html: props.data.selftext_html,
         }}
       />
     );
-  } else if (props.preview) {
+
+  } else if (props.data.preview) {
+    // image
     return (
-      <div >
-        {props.preview.images.map((image, i) => (
-          <img
-            key={i}
-            style={Object.assign({
-              maxWidth: '100%',
-              maxHeight: '100%',
-            }, props.style)}
-            src={image.variants.gif ?
-              image.variants.gif.source.url :
-              image.source.url
-            }
-            alt="toast"
+      <div
+        style={props.style}
+      >
+        {props.data.preview.images.map((image, i) => (
+          <ImageContent
+            key={i} image={image} alt={props.data.title}
           />
         ))}
       </div>
@@ -41,13 +42,11 @@ function PostContent(props) {
   }
 
   console.log('not a selftext or an image'); // eslint-disable-line
-  return <div></div>;
+  return false;
 }
 
 PostContent.propTypes = {
-  html: React.PropTypes.string,
-  preview: React.PropTypes.object,
-  media: React.PropTypes.object,
+  data: React.PropTypes.object,
   style: React.PropTypes.object,
 };
 
