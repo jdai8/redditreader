@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Card, CardHeader } from 'material-ui/Card';
 
 import Thumbnail from './thumbnail';
@@ -26,30 +27,45 @@ class Post extends React.Component {
       expanded: false,
       comments: {},
     };
+    this.onHeaderClick = this.onHeaderClick.bind(this);
     this.toggleExpand = this.toggleExpand.bind(this);
+    this.onDocumentClick = this.onDocumentClick.bind(this);
   }
 
-  toggleExpand(event) {
-
-    if (event.target.tagName === 'A') {
-      return;
+  onHeaderClick(event) {
+    if (event.target.tagName !== 'A') {
+      this.toggleExpand();
     }
+  }
+
+  onDocumentClick(event) {
+    if (!this.card.contains(event.target)) {
+      this.toggleExpand();
+      document.removeEventListener('click', this.onDocumentClick);
+    }
+  }
+
+  toggleExpand() {
 
     const expanded = !this.state.expanded;
     this.setState({ expanded });
 
-    // load comments when expanded for the first time
-    if (expanded && !this.state.comments.data) {
+    if (expanded) {
+      // close on outside click
+      document.addEventListener('click', this.onDocumentClick);
 
-      client.get(this.props.data.permalink).then(resp =>
-        this.setState({ comments: resp[1] })
-      );
+      // load comments when expanded for the first time
+      if (!this.state.comments.data) {
+
+        client.get(this.props.data.permalink).then(resp =>
+          this.setState({ comments: resp[1] })
+        );
+      }
     }
   }
 
   render() {
 
-    // const href = `https://reddit.com${this.props.data.permalink}`;
     const content = this.state.comments.data &&
       <PostContent
         style={{ display: this.state.expanded ? 'block' : 'none' }}
@@ -63,6 +79,7 @@ class Post extends React.Component {
         style={styles.card}
         expanded={this.state.expanded}
         zDepth={this.state.expanded ? 2 : 1}
+        ref={ref => (this.card = ReactDOM.findDOMNode(ref))}
       >
 
         <CardHeader
@@ -73,7 +90,7 @@ class Post extends React.Component {
           }
           style={styles.header}
           subtitle={this.props.data.subreddit}
-          onClick={this.toggleExpand}
+          onClick={this.onHeaderClick}
           className="header" // override cursor: pointer
           avatar={
             <Thumbnail

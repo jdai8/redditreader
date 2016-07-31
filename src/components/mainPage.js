@@ -4,6 +4,8 @@ import Radium from 'radium';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 
+import { Link } from 'react-router';
+
 const styles = {
 
   content: {
@@ -65,6 +67,7 @@ class MainPage extends React.Component {
           this.state.drawerOpen && styles.whenDrawerOpen]}
         >
 
+          <Link to="/r/aww">aww</Link>
           {this.props.children}
 
         </div>
