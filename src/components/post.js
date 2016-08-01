@@ -41,7 +41,6 @@ class Post extends React.Component {
   onDocumentClick(event) {
     if (!this.card.contains(event.target)) {
       this.toggleExpand();
-      document.removeEventListener('click', this.onDocumentClick);
     }
   }
 
@@ -61,6 +60,8 @@ class Post extends React.Component {
           this.setState({ comments: resp[1] })
         );
       }
+    } else {
+      document.removeEventListener('click', this.onDocumentClick);
     }
   }
 
