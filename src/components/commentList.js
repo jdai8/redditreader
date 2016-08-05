@@ -3,18 +3,14 @@ import { List } from 'material-ui/List';
 import { Card, CardText } from 'material-ui/Card';
 import { grey500 } from 'material-ui/styles/colors';
 
-// const borderColors = [
-//   redA700, blueA700, orangeA700, greenA700, yellowA700, indigoA700,
-// ];
-
 function getStyles(i) {
 
   return {
     zDepth: i ? 0 : 1,
     card: {
-      marginLeft: 8,
-      marginRight: i ? 0 : 8,
-      marginBottom: i ? 0 : 8,
+      marginLeft: 5,
+      marginRight: i ? 0 : 5,
+      marginBottom: i ? 0 : 5,
     },
     cardText: {
       borderLeft: i ?

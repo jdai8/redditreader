@@ -62,6 +62,8 @@ class Post extends React.Component {
       }
     } else {
       document.removeEventListener('click', this.onDocumentClick);
+      this.card.scrollIntoView(true);
+      window.scrollBy(0, -64); // scroll under the app bar
     }
   }
 
