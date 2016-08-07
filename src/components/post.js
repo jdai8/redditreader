@@ -62,8 +62,12 @@ class Post extends React.Component {
       }
     } else {
       document.removeEventListener('click', this.onDocumentClick);
-      this.card.scrollIntoView(true);
-      window.scrollBy(0, -64); // scroll under the app bar
+
+      // bring the card into view if we scrolled past it
+      if (this.card.getBoundingClientRect().top < 0) {
+        this.card.scrollIntoView();
+        window.scrollBy(0, -64); // for the app bar
+      }
     }
   }
 

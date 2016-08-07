@@ -1,8 +1,8 @@
 import React from 'react';
 import Radium from 'radium';
 
-import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
+import DrawerContainer from './drawerContainer';
 
 const styles = {
 
@@ -17,10 +17,6 @@ const styles = {
       width: '100%',
       maxWidth: 800,
     },
-  },
-
-  drawer: {
-    zIndex: 1000,
   },
 
   appBar: {
@@ -52,13 +48,7 @@ class MainPage extends React.Component {
           title="Reddit"
         />
 
-        <Drawer
-          containerStyle={styles.drawer}
-          open={this.state.drawerOpen}
-          zDepth={1}
-        >
-          Hello
-        </Drawer>
+        <DrawerContainer open={this.state.drawerOpen} />
 
         <div
           style={[styles.content,
