@@ -9,6 +9,7 @@ const style = {
   },
 };
 
+// an anchor is just a styled <a> that opens in a new tab
 function Anchor(props) {
   return (
     <a

@@ -6,7 +6,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { StyleRoot } from 'radium';
 import Theme from './theme';
 
-import { Router, Route, browserHistory, IndexRoute } from 'react-router';
+import { Router, Route, browserHistory } from 'react-router';
 
 import MainPage from './components/mainPage';
 import PostListContainer from './components/postListContainer';
@@ -18,8 +18,8 @@ const App = () => (
     <MuiThemeProvider muiTheme={Theme}>
 
       <Router history={browserHistory}>
-        <Route path="/" component={MainPage}>
-          <IndexRoute component={PostListContainer} />
+        <Route component={MainPage}>
+          <Route path="/" component={PostListContainer} />
           <Route
             path="/r/:subreddit"
             component={PostListContainer}

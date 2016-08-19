@@ -1,9 +1,9 @@
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-import * as Colors from 'material-ui/styles/colors';
+import { pink800 } from 'material-ui/styles/colors';
 
 const Theme = getMuiTheme({
   palette: {
-    primary1Color: Colors.pink800,
+    primary1Color: pink800,
   },
 });
 

@@ -11,9 +11,6 @@ import client from '../utils/redditClient';
 
 const styles = {
 
-  a: {
-  },
-
   card: {
     margin: 8,
   },
@@ -56,7 +53,10 @@ class Post extends React.Component {
       // load comments when expanded for the first time
       if (!this.state.comments.data) {
 
-        client.get(this.props.data.permalink).then(resp =>
+        client.get(this.props.data.permalink, {
+          limit: 20,
+          raw_json: 1,
+        }).then(resp =>
           this.setState({ comments: resp[1] })
         );
       }

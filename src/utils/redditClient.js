@@ -1,19 +1,19 @@
-function get(url, params = '?limit=20&raw_json=1') {
+import cookies from 'js-cookie';
+import axios from 'axios';
 
-  return new Promise(resolve => {
+function get(url, params) {
 
-    const client = new XMLHttpRequest();
-    client.responseType = 'json';
-
-    client.onload = () => {
-      resolve(client.response);
-    };
-
-    client.open('GET', `https://www.reddit.com${url}.json${params}`);
-    client.send();
-
+  return axios.get(`https://oauth.reddit.com${url}.json`, {
+    params,
+    headers: {
+      'Authorization': `bearer ${cookies.get('accessToken')}`, // eslint-disable-line
+    },
+  }).then(response => {
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
   });
-
 }
 
 export default { get };

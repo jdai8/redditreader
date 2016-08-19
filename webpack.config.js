@@ -1,6 +1,6 @@
-const path = require('path');
+const webpack = require('webpack');
 
-module.exports = {
+const config = {
 
 	entry: ['babel-polyfill', './src/app.js'],
 	output: {
@@ -21,12 +21,22 @@ module.exports = {
         exclude: /node_modules/,
         loader: 'babel-loader',
       },
-      // {
-      //   test:/\.css$/,
-      //   exclude: /node_modules/,
-      //   loader: 'style-loader!css-loader',
-      // }
     ],
   },
-  devtool: 'source-map',
 }
+
+if (process.env.NODE_ENV !== 'production') {
+  config.devtool = 'source-map';
+
+} else {
+
+  config.plugins = [
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+          warnings: false
+      }
+    })
+  ];
+}
+
+module.exports = config;

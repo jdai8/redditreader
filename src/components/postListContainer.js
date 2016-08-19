@@ -25,9 +25,10 @@ class PostListContainer extends React.Component {
 
     const url = subreddit ? `/r/${subreddit}` : '/';
 
-    client.get(url).then(resp =>
-      this.setState({ posts: resp.data.children })
-    );
+    client.get(url, { raw_json: 1 }).then(resp => {
+      this.setState({ posts: resp.data.children });
+      window.scrollTo(0, 0);
+    });
   }
 
   render() {

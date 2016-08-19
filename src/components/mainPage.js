@@ -1,8 +1,12 @@
 import React from 'react';
 import Radium from 'radium';
+import cookies from 'js-cookie';
 
 import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
+
 import DrawerContainer from './drawerContainer';
+import AccountIconButton from './accountIconButton';
 
 const styles = {
 
@@ -45,6 +49,11 @@ class MainPage extends React.Component {
         <AppBar
           style={styles.appBar}
           onLeftIconButtonTouchTap={this.toggleDrawer}
+          iconElementRight={
+            cookies.get('sessionId') ?
+              <AccountIconButton /> :
+              <FlatButton label="Log in" href="/login" />
+          }
           title="Reddit"
         />
 

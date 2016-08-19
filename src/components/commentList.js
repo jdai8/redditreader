@@ -67,10 +67,10 @@ function commentTree(node, i) {
 }
 
 function CommentList(props) {
-  return (
-    <List>
-      {commentTree(props.comments, 0)}
-    </List>
+  const tree = commentTree(props.comments, 0);
+  return (tree.length === 0 ?
+    <CardText> No comments </CardText> :
+    <List> {tree} </List>
   );
 }
 
