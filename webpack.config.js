@@ -9,12 +9,6 @@ const config = {
 	},
 	module: {
 
-    preLoaders: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'eslint-loader',
-    }],
-
     loaders: [
       {
         test: /\.js$/,
@@ -27,6 +21,11 @@ const config = {
 
 if (process.env.NODE_ENV !== 'production') {
   config.devtool = 'source-map';
+  config.module.preLoaders = [{
+    test: /\.js$/,
+    exclude: /node_modules/,
+    loader: 'eslint-loader',
+  }];
 
 } else {
 
