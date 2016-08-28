@@ -30,7 +30,7 @@ class DrawerContainer extends React.Component {
     const url = cookies.get('sessionId') ?
       '/subreddits/mine/subscriber' : '/subreddits/default';
 
-    client.get(url).then(resp =>
+    client.get(url, { limit: 100 }).then(resp =>
       this.setState({ subreddits: resp.data.children })
     );
   }
