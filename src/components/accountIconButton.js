@@ -49,6 +49,7 @@ class AccountIconButton extends React.Component {
           {this.state.name ? this.state.name.charAt(0) : this.smiley}
           </Avatar> */}
         <Popover
+          style={{ padding: 8 }}
           open={this.state.open}
           anchorEl={this.iconRef}
           onRequestClose={this.toggle}
