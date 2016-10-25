@@ -60,6 +60,7 @@ class Post extends React.Component {
           this.setState({ comments: resp[1] })
         );
       }
+
     } else {
       document.removeEventListener('click', this.onDocumentClick);
 
@@ -82,7 +83,7 @@ class Post extends React.Component {
     return (
       <Card
         style={styles.card}
-        expanded={this.state.expanded}
+        expanded={this.state.expanded && this.state.comments.data}
         zDepth={this.state.expanded ? 2 : 1}
         ref={ref => (this.card = ReactDOM.findDOMNode(ref))}
       >
